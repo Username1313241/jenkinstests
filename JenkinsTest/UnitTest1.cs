@@ -1,3 +1,8 @@
+using FluentAssertions;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 using Xunit.Abstractions;
 
 namespace JenkinsTest
@@ -5,11 +10,23 @@ namespace JenkinsTest
     public class UnitTest1
     {
         private readonly ITestOutputHelper output;
+        private readonly ChromeDriver chromeDriver;
 
         public UnitTest1(ITestOutputHelper output)
         {
             this.output = output;
+            var driver = new DriverManager().SetUpDriver(new ChromeConfig());
+            chromeDriver = new ChromeDriver();
         }
+
+        [Fact]
+        public void UITest()
+        {
+            chromeDriver.Navigate().GoToUrl("http://google.com");
+            var searchField = chromeDriver.FindElement(By.CssSelector("textarea[name='q']"));
+            Assert.True(searchField.Displayed);
+        }
+
         [Fact]
         public void PassingTest()
         {
