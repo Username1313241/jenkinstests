@@ -53,5 +53,4 @@ CodeCoverage/
 TestResult.xml
 nunit-*.xml
 
-JenkinsTest\.vs
-/JenkinsTest/.vs/JenkinsTest
+/JenkinsTest/.vs
