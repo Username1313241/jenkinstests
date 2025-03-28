@@ -13,13 +13,13 @@ pipeline {
                 }
             steps {
                 sh 'dotnet --version'
-                sh "pwd"
+                sh 'pwd'
                 dir('JenkinsTest') {
-                  sh "pwd"
-                }
-                sh "pwd"
-                sh 'dotnet test'
+                  sh 'pwd'
+                  sh 'dotnet test'
                 sh 'touch container.txt' 
+                }
+                
             }
         }
     }
