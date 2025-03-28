@@ -10,6 +10,7 @@ pipeline {
             }
             steps {
                 sh 'dotnet --version'
+                sh 'dotnet test'
                 sh 'touch container.txt' 
             }
         }
