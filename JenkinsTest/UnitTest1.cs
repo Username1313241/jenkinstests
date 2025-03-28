@@ -1,22 +1,24 @@
 using FluentAssertions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Remote;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 using Xunit.Abstractions;
 
 namespace JenkinsTest
 {
-    public class UnitTest1
+    public class UnitTest1 : IClassFixture<WebDriverFixture>
     {
         private readonly ITestOutputHelper output;
-        private readonly ChromeDriver chromeDriver;
+        private readonly WebDriverFixture webDriverFixture;
+        private readonly RemoteWebDriver chromeDriver;
 
-        public UnitTest1(ITestOutputHelper output)
+        public UnitTest1(ITestOutputHelper output, WebDriverFixture webDriverFixture)
         {
             this.output = output;
-            var driver = new DriverManager().SetUpDriver(new ChromeConfig());
-            chromeDriver = new ChromeDriver();
+            this.webDriverFixture = webDriverFixture;
+            this.chromeDriver = webDriverFixture.ChromeDriver;
         }
 
         [Fact]
@@ -24,6 +26,14 @@ namespace JenkinsTest
         {
             chromeDriver.Navigate().GoToUrl("http://google.com");
             var searchField = chromeDriver.FindElement(By.CssSelector("textarea[name='q']"));
+            Assert.True(searchField.Displayed);
+        }
+
+        [Fact]
+        public void UIFailingTest()
+        {
+            chromeDriver.Navigate().GoToUrl("http://google.com");
+            var searchField = chromeDriver.FindElement(By.CssSelector("textarea[name='qdfdfdfdf']"));
             Assert.True(searchField.Displayed);
         }
 
