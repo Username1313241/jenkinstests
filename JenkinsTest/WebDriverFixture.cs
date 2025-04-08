@@ -16,7 +16,7 @@ namespace JenkinsTest
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("('--ignore-ssl-errors=yes')");
             chromeOptions.AddArgument("--ignore-certificate-errors");
-            ChromeDriver = new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), chromeOptions);
+            ChromeDriver = new RemoteWebDriver(new Uri("http://selenium:4444/wd/hub"), chromeOptions);
         }
         public void Dispose()
         {
