@@ -23,12 +23,11 @@ pipeline {
             }
         }
 
-        stage('Generate Allure Report') {
+        stage('Prepare Allure Results') {
             steps {
                 sh '''
                     mkdir -p allure-results
                     cp JenkinsTest/TestResults/*.trx allure-results/ || true
-                    allure generate allure-results --clean -o allure-report || true
                 '''
             }
         }
@@ -37,6 +36,7 @@ pipeline {
     post {
         always {
             echo 'Pipeline completed.'
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
         }
     }
 }
