@@ -1,0 +1,35 @@
+version: '3.8'
+
+volumes:
+  jenkins_home:
+    external: true
+    name: install-jenkins-docker_jenkins-data  # Используем существующий volume
+
+networks:
+  jenkins:
+    driver: bridge
+
+services:
+  jenkins:
+    build:
+      context: ./jenkins  # Папка с Dockerfile Jenkins, где ты ставишь dotnet и прочее
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - jenkins
+    restart: unless-stopped
+
+  selenium:
+    image: selenium/standalone-chrome
+    container_name: selenium
+    ports:
+      - "4444:4444"
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - jenkins
+    restart: unless-stopped
