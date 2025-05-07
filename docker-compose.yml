@@ -3,7 +3,7 @@ version: '3.8'
 volumes:
   jenkins_home:
     external: true
-    name: install-jenkins-docker_jenkins-data  # Используем существующий volume
+    name: install-jenkins-docker_jenkins-data  
 
 networks:
   jenkins:
@@ -12,7 +12,7 @@ networks:
 services:
   jenkins:
     build:
-      context: ./jenkins  # Папка с Dockerfile Jenkins, где ты ставишь dotnet и прочее
+      context: ./jenkins  
     container_name: jenkins
     ports:
       - "8080:8080"
